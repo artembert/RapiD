@@ -17,6 +17,7 @@ import { uiNoteEditor } from './note_editor';
 import { localizer } from '../core/localizer';
 
 import { uiRapidFeatureInspector } from './rapid_feature_inspector';
+import { uiSidePanel } from './panels/side-panel';
 
 
 export function uiSidebar(context) {
@@ -151,6 +152,10 @@ export function uiSidebar(context) {
             .append('div')
             .attr('class', 'feature-list-pane')
             .call(uiFeatureList(context));
+
+        selection.call(
+            uiSidePanel(context)
+        );
 
         var inspectorWrap = selection
             .append('div')
