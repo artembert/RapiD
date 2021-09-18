@@ -1,23 +1,19 @@
 import React from "react";
 import {FunctionComponent} from "react";
-import Icon from "./icon";
+import Icon from "./Icon";
 
 interface Props {
     key: string,
     label: string,
 }
 
-const resolveClassName = (classes: string[], id: string) => {
-    const prefix = 'disclosure';
-    return prefix + ' ' + `${prefix}-${id}` + classes.map(val => `${prefix}-${val}`).join(` `)
-}
-
-const Disclosure: FunctionComponent<Props> = ({key, label}) => {
+const Disclosure: FunctionComponent<Props> = ({key, label, children}) => {
     return <>
-        <a href="#" className={"hide-toggle hide-toggle-" + key}>
-            <Icon  />
-            {label}
+        <a href='#' className={'hide-toggle hide-toggle-' + key}>
+            <Icon name='#iD-icon-forward' svgClasses={['pre-text']} useClass='hide-toggle-icon'/>
+            <div dangerouslySetInnerHTML={{__html: label}} />
         </a>
+        {children}
     </>
 }
 
