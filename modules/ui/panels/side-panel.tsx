@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDom from "react-dom";
-import FormField from "../sections/FormField";
 import uniqueId from 'lodash-es/uniqueId'
 import RawTagEditor from "../sections/RawTagEditor";
 

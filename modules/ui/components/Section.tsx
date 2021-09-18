@@ -6,8 +6,8 @@ interface Props {
     id: string,
     classes: string[],
     label: string,
-    expandedByDefault: boolean,
-    shouldDisplay: boolean,
+    expandedByDefault?: boolean,
+    shouldDisplay?: boolean,
 }
 
 const resolveClassName = (classes: string[], id: string) => {
@@ -15,11 +15,13 @@ const resolveClassName = (classes: string[], id: string) => {
     return prefix + ' ' + `${prefix}-${id}` + classes.map(val => `${prefix}-${val}`).join(` `)
 }
 
-const Section: FunctionComponent<Props> = ({classes, id}) => {
+const getKeyFromId = (id: string) => id.replace(/-/g, '_');
+
+const Section: FunctionComponent<Props> = ({classes, id, label, children}) => {
     const className = resolveClassName(classes, id)
     return <div className={className}>
-        <Disclosure>
-
+        <Disclosure key={getKeyFromId(id)} label={label}>
+            {children}
         </Disclosure>
     </div>
 }
