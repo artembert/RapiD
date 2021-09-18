@@ -11,9 +11,11 @@ const Disclosure: FunctionComponent<Props> = ({key, label, children}) => {
     return <>
         <a href='#' className={'hide-toggle hide-toggle-' + key}>
             <Icon name='#iD-icon-forward' svgClasses={['pre-text']} useClass='hide-toggle-icon'/>
-            <div dangerouslySetInnerHTML={{__html: label}} />
+            <span dangerouslySetInnerHTML={{__html: label}} />
         </a>
-        {children}
+        <div className='disclosure-wrap'>
+            {children}
+        </div>
     </>
 }
 
