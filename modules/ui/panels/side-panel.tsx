@@ -2,6 +2,7 @@ import React from "react";
 import ReactDom from "react-dom";
 import FormField from "../sections/FormField";
 import uniqueId from 'lodash-es/uniqueId'
+import RawTagEditor from "../sections/RawTagEditor";
 
 export function uiSidePanel(context) {
   function panel(selection) {
@@ -9,7 +10,7 @@ export function uiSidePanel(context) {
     selection.append("div").attr("id", elementId);
 
     ReactDom.render(
-      <FormField label="Property name" />,
+      <RawTagEditor />,
       document.getElementById(elementId)
     );
   }
