@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDom from "react-dom";
 import uniqueId from 'lodash-es/uniqueId'
-import RawTagEditor from "../sections/RawTagEditor";
 import EntityEditor from '../components/EntityEditor';
+import RawTagEditor from '../components/RawTagEditor/RawTagEditor';
 
 export function uiSidePanel(context) {
     function panel(selection) {
