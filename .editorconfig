@@ -19,4 +19,4 @@ ij_html_quote_style = single
 [*.{js,jsx,ts,tsx}]
 end_of_line = lf
 insert_final_newline = true
-indent_size = tab_width
+# indent_size = tab_width
