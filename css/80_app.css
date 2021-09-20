@@ -888,7 +888,8 @@ a.hide-toggle {
     height: 100%;
     flex: 1 1 100%;
 }
-.entity-editor {
+.entity-editor,
+.entity-editor--react-element {
     padding: 20px;
 }
 /* preserve extra space at bottom of inspector to allow for dropdown options - #5280 */
