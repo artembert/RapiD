@@ -12,7 +12,7 @@ interface Props {
 
 const resolveClassName = (classes: string[], id: string) => {
     const prefix = 'section';
-    return prefix + ' ' + `${prefix}-${id}` + classes.map(val => `${prefix}-${val}`).join(` `)
+    return prefix + ' ' + `${prefix}-${id}` + ' ' + classes.map(val => `${prefix}-${val}`).join(` `)
 }
 
 const getKeyFromId = (id: string) => id.replace(/-/g, '_');
@@ -20,7 +20,7 @@ const getKeyFromId = (id: string) => id.replace(/-/g, '_');
 const Section: FunctionComponent<Props> = ({classes, id, label, children}) => {
     const className = resolveClassName(classes, id)
     return <div className={className}>
-        <Disclosure key={getKeyFromId(id)} label={label}>
+        <Disclosure keyName={getKeyFromId(id)} label={label}>
             {children}
         </Disclosure>
     </div>

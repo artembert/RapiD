@@ -3,13 +3,13 @@ import {FunctionComponent} from "react";
 import Icon from "./Icon";
 
 interface Props {
-    key: string,
+    keyName: string,
     label: string,
 }
 
-const Disclosure: FunctionComponent<Props> = ({key, label, children}) => {
+const Disclosure: FunctionComponent<Props> = ({keyName, label, children}) => {
     return <>
-        <a href='#' className={'hide-toggle hide-toggle-' + key}>
+        <a href='#' className={'hide-toggle hide-toggle-' + keyName}>
             <Icon name='#iD-icon-forward' svgClasses={['pre-text']} useClass='hide-toggle-icon'/>
             <span dangerouslySetInnerHTML={{__html: label}} />
         </a>
