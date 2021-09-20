@@ -12,9 +12,12 @@ esbuild
     metafile: true,
     outfile: 'dist/iD.js',
       watch: {
-          onRebuild(error, result) {
-              if (error) console.error('watch build failed:', error);
-              else console.log('watch build succeeded');
+          onRebuild(error) {
+              if (error) {
+                  console.error('watch build failed:', error);
+              } else {
+                  console.log(new Date().toLocaleTimeString(), 'watch build succeeded');
+              }
           },
       },
 
