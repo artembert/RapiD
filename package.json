@@ -86,6 +86,7 @@
     "@fortawesome/free-solid-svg-icons": "~5.15.1",
     "@ideditor/temaki": "~5.0.0",
     "@mapbox/maki": "^6.0.0",
+    "@types/d3-dispatch": "^3.0.1",
     "@types/react": "^17.0.21",
     "@types/react-dom": "^17.0.9",
     "autoprefixer": "^10.3.2",
