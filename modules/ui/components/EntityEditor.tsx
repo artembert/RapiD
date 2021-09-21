@@ -1,13 +1,23 @@
-import React, {FunctionComponent} from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
+import { SelectedIdContext } from 'ui/entity-editor/SelectedIdContext';
+import { SELECT_FEATURE_EVENT_NAME, selectFeatureDispatch } from '../intermediate-layer/events/select-feature';
 
-interface Props {
+interface Props {}
 
-}
+const EntityEditor: FunctionComponent<Props> = ({ children }) => {
+    const [selectedIds, setSelectedIds] = useState([undefined]);
 
-const EntityEditor: FunctionComponent<Props> = ({children}) => {
+    useEffect(() => {
+        selectFeatureDispatch.on(SELECT_FEATURE_EVENT_NAME, (ids) => {
+            setSelectedIds(ids);
+        });
+    }, []);
+
     return (
-        <div className="entity-editor--react-element">{children}</div>
+        <SelectedIdContext.Provider value={selectedIds}>
+            <div className='entity-editor--react-element'>{children}</div>
+        </SelectedIdContext.Provider>
     );
-}
+};
 
 export default EntityEditor;

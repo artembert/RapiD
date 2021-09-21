@@ -25,6 +25,7 @@ import { osmNode, osmWay } from '../osm';
 import * as Operations from '../operations/index';
 import { uiCmd } from '../ui/cmd';
 import { utilKeybinding, utilTotalExtent } from '../util';
+import { SELECT_FEATURE_EVENT_NAME, selectFeatureDispatch } from '../ui/intermediate-layer/events/select-feature';
 
 
 export function modeSelect(context, selectedIDs) {
@@ -277,6 +278,7 @@ export function modeSelect(context, selectedIDs) {
 
         context.ui().sidebar
             .select(selectedIDs, _newFeature);
+        selectFeatureDispatch.call(SELECT_FEATURE_EVENT_NAME, undefined, selectedIDs);
 
         context.history()
             .on('change.select', function() {
