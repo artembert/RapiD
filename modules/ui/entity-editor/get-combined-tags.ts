@@ -16,7 +16,10 @@
 //   service: [ 'driveway', 'parking_aisle' ],
 //   width: [ '3', undefined ]
 // }
-export function getCombinedTags(entityIDs, graph) {
+type CombinedTags = Record<string, (string | undefined)[] | string | number | boolean>
+
+
+export function getCombinedTags(entityIDs, graph: CoreGraph): CombinedTags {
     var tags = {};
     var tagCounts = {};
     var allKeys = new Set();
