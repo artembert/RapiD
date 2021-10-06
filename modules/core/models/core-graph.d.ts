@@ -1,5 +1,7 @@
+interface Entities extends Record<string, any> {}
+
 interface CoreGraph {
-    entities: object;
+    entities: Entities;
     _parentWays: object;
     _parentRels: object;
 
