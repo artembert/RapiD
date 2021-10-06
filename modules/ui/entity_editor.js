@@ -32,7 +32,7 @@ export function uiEntityEditor(context) {
     var _sections;
 
     function entityEditor(selection) {
-        var combinedTags = getCombinedTags(_entityIDs, context.graph());
+        var combinedTags = getCombinedTags(_entityIDs, context.graph().entities);
 
         // Header
         var header = selection.selectAll('.header')

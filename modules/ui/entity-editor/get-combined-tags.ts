@@ -1,3 +1,7 @@
+import { hasEntity } from '../../core/graph/has-entity'
+
+export type CombinedTags = Record<string, (string | undefined)[] | string | number | boolean>
+
 // Returns a single object containing the tags of all the given entities.
 // Example:
 // {
@@ -16,16 +20,14 @@
 //   service: [ 'driveway', 'parking_aisle' ],
 //   width: [ '3', undefined ]
 // }
-type CombinedTags = Record<string, (string | undefined)[] | string | number | boolean>
 
-
-export function getCombinedTags(entityIDs, graph: CoreGraph): CombinedTags {
+export function getCombinedTags(entityIDs, graphEntities: Entities): CombinedTags {
     var tags = {};
     var tagCounts = {};
     var allKeys = new Set();
 
     var entities = entityIDs.map(function(entityID) {
-        return graph.hasEntity(entityID);
+        return hasEntity(graphEntities, entityID)
     }).filter(Boolean);
 
     // gather the aggregate keys
