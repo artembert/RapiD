@@ -5,7 +5,7 @@ esbuild
   .build({
     bundle: true,
     minify: false,
-    sourcemap: true,
+    sourcemap: 'both',
     entryPoints: ['./modules/id.js'],
     legalComments: 'none',
     logLevel: 'info',
