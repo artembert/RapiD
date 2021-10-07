@@ -5,29 +5,32 @@ import { serviceTaginfo } from '../../../services';
 import Combobox from '../inputs/Combobox';
 
 interface Props {
-    tagName: string,
+    tagName: string;
 }
 
 const TagRow: FunctionComponent<Props> = ({ tagName }) => {
-    const [items, setItems] = useState([{label: tagName, value: tagName}, {label: 'Loading...', value: '__loading'}]);
+    const [items, setItems] = useState([
+        { label: tagName, value: tagName },
+        { label: 'Loading...', value: '__loading' },
+    ]);
     const [isKeysLoaded, setIsKeysLoaded] = useState(false);
 
     const loadKeys = useCallback(() => {
         if (isKeysLoaded) {
             return;
         }
-        setIsKeysLoaded(true);
         serviceTaginfo.keys(
             {
                 debounce: true,
                 geometry: 'area',
                 query: '',
             },
-            (err, data) => {
+            (err, data: { title; value }[]) => {
                 if (err) {
                     return;
                 }
-                setItems(data.map(({label, value}) => ({label: value, value: label})));
+                setItems(data.map(({ title, value }) => ({ label: title, value })));
+                setIsKeysLoaded(true);
             }
         );
     }, []);
