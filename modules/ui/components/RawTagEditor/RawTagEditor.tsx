@@ -21,12 +21,14 @@ const RawTagEditor: FunctionComponent<Props> = ({}) => {
             label={t('inspector.title_count', { title: t.html('inspector.tags'), count: 7 })}>
             <p>SelectedId: {selectedId}</p>
             <table>
-                {Object.entries(tags).map(([tagName, value]) => (
-                    <tr key={tagName}>
-                        <td>{tagName}</td>
-                        <td>{value}</td>
-                    </tr>
-                ))}
+                <tbody>
+                    {Object.entries(tags).map(([tagName, value]) => (
+                        <tr key={tagName}>
+                            <td>{tagName}</td>
+                            <td>{value}</td>
+                        </tr>
+                    ))}
+                </tbody>
             </table>
             <ul className='tag-list'>
                 <TagRow tagName='landuse' />
