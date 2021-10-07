@@ -1,21 +1,29 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
+import { GraphGetterContext } from 'ui/entity-editor/GraphGetterContext';
 import { SelectedIdContext } from 'ui/entity-editor/SelectedIdContext';
 import { SELECT_FEATURE_EVENT_NAME, selectFeatureDispatch } from '../intermediate-layer/events/select-feature';
+import RawTagEditor from './RawTagEditor/RawTagEditor';
 
-interface Props {}
+interface Props {
+    getGraph: () => CoreGraph;
+}
 
-const EntityEditor: FunctionComponent<Props> = ({ children }) => {
-    const [selectedIds, setSelectedIds] = useState([undefined]);
+const EntityEditor: FunctionComponent<Props> = ({ getGraph }) => {
+    const [selectedIds, setSelectedIds] = useState([] as string[]);
 
     useEffect(() => {
-        selectFeatureDispatch.on(SELECT_FEATURE_EVENT_NAME, (ids) => {
-            setSelectedIds(ids);
+        selectFeatureDispatch.on(SELECT_FEATURE_EVENT_NAME, (selectedIds) => {
+            setSelectedIds(selectedIds);
         });
     }, []);
 
     return (
         <SelectedIdContext.Provider value={selectedIds}>
-            <div className='entity-editor--react-element'>{children}</div>
+            <GraphGetterContext.Provider value={getGraph}>
+                <div className='entity-editor--react-element'>
+                    <RawTagEditor />
+                </div>
+            </GraphGetterContext.Provider>
         </SelectedIdContext.Provider>
     );
 };
