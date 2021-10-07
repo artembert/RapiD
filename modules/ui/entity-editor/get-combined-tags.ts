@@ -21,7 +21,7 @@ export type CombinedTags = Record<string, (string | undefined)[] | string | numb
 //   width: [ '3', undefined ]
 // }
 
-export function getCombinedTags(entityIDs, graphEntities: Entities): CombinedTags {
+export function getCombinedTags(entityIDs: string[], graphEntities: Entities): CombinedTags {
     var tags = {};
     var tagCounts = {};
     var allKeys = new Set();
