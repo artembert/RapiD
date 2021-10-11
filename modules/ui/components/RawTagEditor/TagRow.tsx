@@ -6,9 +6,10 @@ import Combobox from '../inputs/Combobox';
 
 interface Props {
     tagName: string;
+    value: string;
 }
 
-const TagRow: FunctionComponent<Props> = ({ tagName }) => {
+const TagRow: FunctionComponent<Props> = ({ tagName, value }) => {
     const [items, setItems] = useState([
         { label: tagName, value: tagName },
         { label: 'Loading...', value: '__loading' },
@@ -43,7 +44,7 @@ const TagRow: FunctionComponent<Props> = ({ tagName }) => {
                 <div className='key-wrap'>
                     <Combobox data={items} accentStyle={true} focusHandler={selectFocusHandler} />
                 </div>
-                <div className='value-wrap'>value</div>
+                <div className='value-wrap'>{value}</div>
                 <button type='button' className='form-field-button remove' title={t('icons.remove')}>
                     <Icon name='#iD-operation-delete' />
                 </button>

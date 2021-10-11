@@ -31,7 +31,9 @@ const RawTagEditor: FunctionComponent<Props> = ({}) => {
                 </tbody>
             </table>
             <ul className='tag-list'>
-                <TagRow tagName='landuse' />
+                {Object.entries(tags).map(([tagName, value]) => (
+                    <TagRow tagName={tagName} value={value as string} key={tagName} />
+                ))}
             </ul>
         </Section>
     );
