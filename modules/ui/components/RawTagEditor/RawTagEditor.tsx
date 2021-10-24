@@ -12,7 +12,7 @@ const RawTagEditor: FunctionComponent<Props> = ({}) => {
     const selectedId = useContext(SelectedIdContext);
     const graphGetter = useContext(GraphGetterContext);
 
-    const tags = getCombinedTags(selectedId, graphGetter().entities);
+    const tags = Object.entries(getCombinedTags(selectedId, graphGetter().entities));
 
     return (
         <Section
@@ -22,7 +22,7 @@ const RawTagEditor: FunctionComponent<Props> = ({}) => {
             <p>SelectedId: {selectedId}</p>
             <table>
                 <tbody>
-                    {Object.entries(tags).map(([tagName, value]) => (
+                    {tags.map(([tagName, value]) => (
                         <tr key={tagName}>
                             <td>{tagName}</td>
                             <td>{value}</td>
@@ -31,8 +31,8 @@ const RawTagEditor: FunctionComponent<Props> = ({}) => {
                 </tbody>
             </table>
             <ul className='tag-list'>
-                {Object.entries(tags).map(([tagName, value]) => (
-                    <TagRow tagName={tagName} value={value as string} key={tagName} />
+                {tags.map(([tagName, value]) => (
+                    <TagRow tagName={tagName} value={value} key={tagName} />
                 ))}
             </ul>
         </Section>
