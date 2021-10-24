@@ -1,6 +1,6 @@
 import { hasEntity } from '../../core/graph/has-entity'
 
-export type CombinedTags = Record<string, (string | undefined)[] | string | number | boolean>
+export type CombinedTags = Record<string, (string | undefined)[] | string>
 
 // Returns a single object containing the tags of all the given entities.
 // Example:
