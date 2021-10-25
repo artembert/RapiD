@@ -278,7 +278,7 @@ export function modeSelect(context, selectedIDs) {
 
         context.ui().sidebar
             .select(selectedIDs, _newFeature);
-        selectFeatureDispatch.call(SELECT_FEATURE_EVENT, undefined, selectedIDs);
+        // selectFeatureDispatch.call(SELECT_FEATURE_EVENT, undefined, selectedIDs);
 
         context.history()
             .on('change.select', function() {

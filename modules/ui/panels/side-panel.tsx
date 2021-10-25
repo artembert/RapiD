@@ -8,7 +8,7 @@ export function uiSidePanel(context) {
         const elementId = uniqueId('ideditor-side_panel-');
         selection.append('div').attr('id', elementId);
 
-        ReactDom.render(<EntityEditor getGraph={context.graph} />, document.getElementById(elementId));
+        // ReactDom.render(<EntityEditor getGraph={context.graph} />, document.getElementById(elementId));
     }
 
     return panel;

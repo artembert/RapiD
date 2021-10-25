@@ -861,9 +861,9 @@ a.hide-toggle {
     left: 0;
 }
 
-.pane:last-child {
-    right: 0;
-}
+/*.pane:last-child {*/
+/*    right: 0;*/
+/*}*/
 .feature-list-pane {
     display: flex;
     flex-direction: column;

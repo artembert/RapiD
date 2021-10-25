@@ -18,13 +18,13 @@ export function uiInspector(context) {
 
 
     function inspector(selection) {
-        presetList
-            .entityIDs(_entityIDs)
-            .autofocus(_newFeature)
-            .on('choose', inspector.setPreset)
-            .on('cancel', function() {
-                inspector.setPreset();
-            });
+        // presetList
+        //     .entityIDs(_entityIDs)
+        //     .autofocus(_newFeature)
+        //     .on('choose', inspector.setPreset)
+        //     .on('cancel', function() {
+        //         inspector.setPreset();
+        //     });
 
         entityEditor
             .state(_state)
@@ -46,8 +46,8 @@ export function uiInspector(context) {
             .append('div')
             .attr('class', 'entity-editor-pane pane');
 
-        wrap = wrap.merge(enter);
-        presetPane = wrap.selectAll('.preset-list-pane');
+        // wrap = wrap.merge(enter);
+        // presetPane = wrap.selectAll('.preset-list-pane');
         editorPane = wrap.selectAll('.entity-editor-pane');
 
         function shouldDefaultToPresetList() {
@@ -84,13 +84,13 @@ export function uiInspector(context) {
         }
 
         if (shouldDefaultToPresetList()) {
-            wrap.style('right', '-100%');
+            // wrap.style('right', '-100%');
             editorPane.classed('hide', true);
-            presetPane.classed('hide', false)
-                .call(presetList);
+            // presetPane.classed('hide', false)
+                // .call(presetList);
         } else {
-            wrap.style('right', '0%');
-            presetPane.classed('hide', true);
+            // wrap.style('right', '0%');
+            // presetPane.classed('hide', true);
             editorPane.classed('hide', false)
                 .call(entityEditor);
         }
@@ -111,7 +111,7 @@ export function uiInspector(context) {
 
     inspector.showList = function(presets) {
 
-        presetPane.classed('hide', false);
+        // presetPane.classed('hide', false);
 
         wrap.transition()
             .styleTween('right', function() {
@@ -122,29 +122,29 @@ export function uiInspector(context) {
             });
 
         if (presets) {
-            presetList.presets(presets);
+            // presetList.presets(presets);
         }
 
-        presetPane
-            .call(presetList.autofocus(true));
+        // presetPane
+        //     .call(presetList.autofocus(true));
     };
 
     inspector.setPreset = function(preset) {
 
         // upon setting multipolygon, go to the area preset list instead of the editor
         if (preset && preset.id === 'type/multipolygon') {
-            presetPane
-                .call(presetList.autofocus(true));
+            // presetPane
+            //     .call(presetList.autofocus(true));
 
         } else {
             editorPane.classed('hide', false);
-            wrap.transition()
-                .styleTween('right', function() {
-                    return d3_interpolate('-100%', '0%');
-                })
-                .on('end', function () {
-                    presetPane.classed('hide', true);
-                });
+            // wrap.transition()
+            //     .styleTween('right', function() {
+            //         return d3_interpolate('-100%', '0%');
+            //     })
+            //     .on('end', function () {
+            //         presetPane.classed('hide', true);
+            //     });
 
             if (preset) {
                 entityEditor.presets([preset]);

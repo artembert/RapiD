@@ -84,15 +84,15 @@ export function uiEntityEditor(context) {
 
         if (!_sections) {
             _sections = [
-                uiSectionSelectionList(context),
-                uiSectionFeatureType(context).on('choose', function(presets) {
-                    dispatch.call('choose', this, presets);
-                }),
-                uiSectionEntityIssues(context),
-                uiSectionPresetFields(context).on('change', changeTags).on('revert', revertTags),
+                // uiSectionSelectionList(context),
+                // uiSectionFeatureType(context).on('choose', function(presets) {
+                //     dispatch.call('choose', this, presets);
+                // }),
+                // uiSectionEntityIssues(context),
+                // uiSectionPresetFields(context).on('change', changeTags).on('revert', revertTags),
                 uiSectionRawTagEditor('raw-tag-editor', context).on('change', changeTags),
-                uiSectionRawMemberEditor(context),
-                uiSectionRawMembershipEditor(context)
+                // uiSectionRawMemberEditor(context),
+                // uiSectionRawMembershipEditor(context)
             ];
         }
 

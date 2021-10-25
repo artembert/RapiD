@@ -18,17 +18,16 @@ import { localizer } from '../core/localizer';
 
 import { uiRapidFeatureInspector } from './rapid_feature_inspector';
 import { uiSidePanel } from './panels/side-panel';
-import { SELECT_FEATURE_EVENT, selectFeatureDispatch } from './intermediate-layer/events/select-feature';
 
 
 export function uiSidebar(context) {
     var inspector = uiInspector(context);
-    var rapidInspector = uiRapidFeatureInspector(context);
-    var dataEditor = uiDataEditor(context);
-    var noteEditor = uiNoteEditor(context);
-    var improveOsmEditor = uiImproveOsmEditor(context);
-    var keepRightEditor = uiKeepRightEditor(context);
-    var osmoseEditor = uiOsmoseEditor(context);
+    // var rapidInspector = uiRapidFeatureInspector(context);
+    // var dataEditor = uiDataEditor(context);
+    // var noteEditor = uiNoteEditor(context);
+    // var improveOsmEditor = uiImproveOsmEditor(context);
+    // var keepRightEditor = uiKeepRightEditor(context);
+    // var osmoseEditor = uiOsmoseEditor(context);
     var _current;
     var _wasRapiD = false;
     var _wasData = false;
@@ -151,8 +150,8 @@ export function uiSidebar(context) {
 
         var featureListWrap = selection
             .append('div')
-            // .attr('class', 'feature-list-pane')
-            // .call(uiFeatureList(context));
+            .attr('class', 'feature-list-pane')
+            .call(uiFeatureList(context));
 
         selection.call(
             uiSidePanel(context)
@@ -180,24 +179,21 @@ export function uiSidebar(context) {
         };
 
         sidebar.hoverModeSelect = _throttle(hoverModeSelect, 200);
-        sidebar.hoverModeSelect = function() {
-
-        };
 
         function hover(targets) {
             var datum = targets && targets.length && targets[0];
             if (datum && datum.__featurehash__) { // hovering on data
                 _wasData = true;
-                sidebar
-                    .show(dataEditor.datum(datum));
+                // sidebar
+                //     .show(dataEditor.datum(datum));
 
                 selection.selectAll('.sidebar-component')
                     .classed('inspector-hover', true);
 
             } else if (datum && datum.__fbid__) { // hovering on RapiD data
                 _wasRapiD = true;
-                sidebar
-                    .show(rapidInspector.datum(datum));
+                // sidebar
+                //     .show(rapidInspector.datum(datum));
 
                 selection.selectAll('.sidebar-component')
                     .classed('inspector-hover', true)
@@ -213,8 +209,8 @@ export function uiSidebar(context) {
                     datum = osm.getNote(datum.id); // marker may contain stale data - get latest
                 }
 
-                sidebar
-                    .show(noteEditor.note(datum));
+                // sidebar
+                //     .show(noteEditor.note(datum));
 
                 selection.selectAll('.sidebar-component')
                     .classed('inspector-hover', true);
@@ -231,11 +227,11 @@ export function uiSidebar(context) {
                 // Currently only three possible services
                 var errEditor;
                 if (datum.service === 'keepRight') {
-                    errEditor = keepRightEditor;
+                    // errEditor = keepRightEditor;
                 } else if (datum.service === 'osmose') {
-                    errEditor = osmoseEditor;
+                    // errEditor = osmoseEditor;
                 } else {
-                    errEditor = improveOsmEditor;
+                    // errEditor = improveOsmEditor;
                 }
 
                 context.container().selectAll('.qaItem.' + datum.service)
@@ -285,165 +281,154 @@ export function uiSidebar(context) {
             }
         }
 
-        function handleHover(selectedItems) {
-            if (Array.isArray(selectedItems)) {
-                const selectedIds = selectedItems.map(item => item.id);
-                selectFeatureDispatch.call(SELECT_FEATURE_EVENT, undefined, selectedIds);
-            }
-        }
-
-        sidebar.hover = _throttle(handleHover, 200);
-
-        sidebar.hover.cancel = function() {
-
-        };
+        sidebar.hover = _throttle(hover, 200);
 
 
         sidebar.intersects = function(wgs84Extent) {
-        // var rect = selection.node().getBoundingClientRect();
-        // return wgs84Extent.intersects(new Extent(
-        //     context.projection.invert([0, rect.height]),
-        //     context.projection.invert([rect.width, 0])
-        // ));
+            var rect = selection.node().getBoundingClientRect();
+            return wgs84Extent.intersects(new Extent(
+                context.projection.invert([0, rect.height]),
+                context.projection.invert([rect.width, 0])
+            ));
         };
 
 
         sidebar.select = function(ids, newFeature) {
-            // sidebar.hide();
-            //
-            // if (ids && ids.length) {
-            //
-            //     var entity = ids.length === 1 && context.entity(ids[0]);
-            //     if (entity && newFeature && selection.classed('collapsed')) {
-            //         // uncollapse the sidebar
-            //         var extent = entity.extent(context.graph());
-            //         sidebar.expand(sidebar.intersects(extent));
-            //     }
-            //
-            //     featureListWrap
-            //         .classed('inspector-hidden', true);
-            //
-            //     inspectorWrap
-            //         .classed('inspector-hidden', false)
-            //         .classed('inspector-hover', false);
-            //
-            //     // reload the UI even if the ids are the same since the entities
-            //     // themselves may have changed
-            //     inspector
-            //         .state('select')
-            //         .entityIDs(ids)
-            //         .newFeature(newFeature);
-            //
-            //     inspectorWrap
-            //         .call(inspector);
-            //
-            // } else {
-            //     inspector
-            //         .state('hide');
-            // }
+            sidebar.hide();
+
+            if (ids && ids.length) {
+
+                var entity = ids.length === 1 && context.entity(ids[0]);
+                if (entity && newFeature && selection.classed('collapsed')) {
+                    // uncollapse the sidebar
+                    var extent = entity.extent(context.graph());
+                    sidebar.expand(sidebar.intersects(extent));
+                }
+
+                featureListWrap
+                    .classed('inspector-hidden', true);
+
+                inspectorWrap
+                    .classed('inspector-hidden', false)
+                    .classed('inspector-hover', false);
+
+                // reload the UI even if the ids are the same since the entities
+                // themselves may have changed
+                inspector
+                    .state('select')
+                    .entityIDs(ids)
+                    .newFeature(newFeature);
+
+                inspectorWrap
+                    .call(inspector);
+
+            } else {
+                inspector
+                    .state('hide');
+            }
         };
 
 
         sidebar.showPresetList = function() {
-            // inspector.showList();
+            inspector.showList();
         };
 
 
         sidebar.show = function(component, element) {
-            // featureListWrap
-            //     .classed('inspector-hidden', true);
-            // inspectorWrap
-            //     .classed('inspector-hidden', true);
-            //
-            // if (_current) _current.remove();
-            // _current = selection
-            //     .append('div')
-            //     .attr('class', 'sidebar-component')
-            //     .call(component, element);
+            featureListWrap
+                .classed('inspector-hidden', true);
+            inspectorWrap
+                .classed('inspector-hidden', true);
+
+            if (_current) _current.remove();
+            _current = selection
+                .append('div')
+                .attr('class', 'sidebar-component')
+                .call(component, element);
         };
 
 
         sidebar.hide = function() {
-            // featureListWrap
-            //     .classed('inspector-hidden', false);
-            // inspectorWrap
-            //     .classed('inspector-hidden', true);
-            //
-            // if (_current) _current.remove();
-            // _current = null;
+            featureListWrap
+                .classed('inspector-hidden', false);
+            inspectorWrap
+                .classed('inspector-hidden', true);
+
+            if (_current) _current.remove();
+            _current = null;
         };
 
 
         sidebar.expand = function(moveMap) {
-            // if (selection.classed('collapsed')) {
-            //     sidebar.toggle(moveMap);
-            // }
+            if (selection.classed('collapsed')) {
+                sidebar.toggle(moveMap);
+            }
         };
 
 
         sidebar.collapse = function(moveMap) {
-            // if (!selection.classed('collapsed')) {
-            //     sidebar.toggle(moveMap);
-            // }
+            if (!selection.classed('collapsed')) {
+                sidebar.toggle(moveMap);
+            }
         };
 
 
         sidebar.toggle = function(moveMap) {
 
-            // // Don't allow sidebar to toggle when the user is in the walkthrough.
-            // if (context.inIntro()) return;
-            //
-            // var isCollapsed = selection.classed('collapsed');
-            // var isCollapsing = !isCollapsed;
-            // var isRTL = (localizer.textDirection() === 'rtl');
-            // var scaleX = isRTL ? 0 : 1;
-            // var xMarginProperty = isRTL ? 'margin-right' : 'margin-left';
-            //
-            // sidebarWidth = selection.node().getBoundingClientRect().width;
-            //
-            // // switch from % to px
-            // selection.style('width', sidebarWidth + 'px');
-            //
-            // var startMargin, endMargin, lastMargin;
-            // if (isCollapsing) {
-            //     startMargin = lastMargin = 0;
-            //     endMargin = -sidebarWidth;
-            // } else {
-            //     startMargin = lastMargin = -sidebarWidth;
-            //     endMargin = 0;
-            // }
-            //
-            // if (!isCollapsing) {
-            //     // unhide the sidebar's content before it transitions onscreen
-            //     selection.classed('collapsed', isCollapsing);
-            // }
-            //
-            // selection
-            //     .transition()
-            //     .style(xMarginProperty, endMargin + 'px')
-            //     .tween('panner', function() {
-            //         var i = d3_interpolateNumber(startMargin, endMargin);
-            //         return function(t) {
-            //             var dx = lastMargin - Math.round(i(t));
-            //             lastMargin = lastMargin - dx;
-            //             context.ui().onResize(moveMap ? undefined : [dx * scaleX, 0]);
-            //         };
-            //     })
-            //     .on('end', function() {
-            //         if (isCollapsing) {
-            //             // hide the sidebar's content after it transitions offscreen
-            //             selection.classed('collapsed', isCollapsing);
-            //         }
-            //
-            //         // switch back from px to %
-            //         if (!isCollapsing) {
-            //             var containerWidth = container.node().getBoundingClientRect().width;
-            //             var widthPct = (sidebarWidth / containerWidth) * 100;
-            //             selection
-            //                 .style(xMarginProperty, null)
-            //                 .style('width', widthPct + '%');
-            //         }
-            //     });
+            // Don't allow sidebar to toggle when the user is in the walkthrough.
+            if (context.inIntro()) return;
+
+            var isCollapsed = selection.classed('collapsed');
+            var isCollapsing = !isCollapsed;
+            var isRTL = (localizer.textDirection() === 'rtl');
+            var scaleX = isRTL ? 0 : 1;
+            var xMarginProperty = isRTL ? 'margin-right' : 'margin-left';
+
+            sidebarWidth = selection.node().getBoundingClientRect().width;
+
+            // switch from % to px
+            selection.style('width', sidebarWidth + 'px');
+
+            var startMargin, endMargin, lastMargin;
+            if (isCollapsing) {
+                startMargin = lastMargin = 0;
+                endMargin = -sidebarWidth;
+            } else {
+                startMargin = lastMargin = -sidebarWidth;
+                endMargin = 0;
+            }
+
+            if (!isCollapsing) {
+                // unhide the sidebar's content before it transitions onscreen
+                selection.classed('collapsed', isCollapsing);
+            }
+
+            selection
+                .transition()
+                .style(xMarginProperty, endMargin + 'px')
+                .tween('panner', function() {
+                    var i = d3_interpolateNumber(startMargin, endMargin);
+                    return function(t) {
+                        var dx = lastMargin - Math.round(i(t));
+                        lastMargin = lastMargin - dx;
+                        context.ui().onResize(moveMap ? undefined : [dx * scaleX, 0]);
+                    };
+                })
+                .on('end', function() {
+                    if (isCollapsing) {
+                        // hide the sidebar's content after it transitions offscreen
+                        selection.classed('collapsed', isCollapsing);
+                    }
+
+                    // switch back from px to %
+                    if (!isCollapsing) {
+                        var containerWidth = container.node().getBoundingClientRect().width;
+                        var widthPct = (sidebarWidth / containerWidth) * 100;
+                        selection
+                            .style(xMarginProperty, null)
+                            .style('width', widthPct + '%');
+                    }
+                });
         };
 
         // toggle the sidebar collapse when double-clicking the resizer
