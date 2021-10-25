@@ -18,6 +18,7 @@ import { localizer } from '../core/localizer';
 
 import { uiRapidFeatureInspector } from './rapid_feature_inspector';
 import { uiSidePanel } from './panels/side-panel';
+import { SELECT_FEATURE_EVENT, selectFeatureDispatch } from './intermediate-layer/events/select-feature';
 
 
 export function uiSidebar(context) {
@@ -284,10 +285,14 @@ export function uiSidebar(context) {
             }
         }
 
-        // sidebar.hover = _throttle(hover, 200);
-        sidebar.hover = function() {
+        function handleHover(selectedItems) {
+            if (Array.isArray(selectedItems)) {
+                const selectedIds = selectedItems.map(item => item.id);
+                selectFeatureDispatch.call(SELECT_FEATURE_EVENT, undefined, selectedIds);
+            }
+        }
 
-        };
+        sidebar.hover = _throttle(handleHover, 200);
 
         sidebar.hover.cancel = function() {
 
